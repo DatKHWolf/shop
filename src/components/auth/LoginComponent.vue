@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="my-5 text-center offset-2 col-8">
-      <img src="@/assets/welcome.svg" class="img-fluid" />
+      <img src="@/assets/lock.svg" class="img-fluid" />
     </div>
     <div class="text-center">
-      <h2>Jetzt Registrieren</h2>
+      <h2>Jetzt einloggen</h2>
       <p>
         oder
         <a
           class="text-vue2"
           role="button"
-          @click="changeComponent('LoginComponent')"
+          @click="changeComponent('RegisterComponent')"
         >
-          melden Sie sich mit Ihrem Konto an</a
+          erstellen Sie ein Konto.</a
         >
       </p>
     </div>
@@ -45,24 +45,11 @@
           }}</small>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group col-md8 offset-2">
-          <label for="password"><strong>Passwort wiederholen</strong></label>
-          <Field
-            as="input"
-            type="password"
-            class="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-          /><small class="text-danger" v-if="errors.confirmPassword">{{
-            errors.confirmPassword
-          }}</small>
-        </div>
-      </div>
+
       <div class="form-row mt-3">
         <div class="form-group col-md8 offset-2">
           <div class="d-grid">
-            <button class="btn bg-vue">Registrieren</button>
+            <button class="btn bg-vue">Einloggen</button>
           </div>
         </div>
       </div>
@@ -73,24 +60,21 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
-import axios from "axios";
-let APIKey = "So nicht"
 export default {
-  name: "RegisterComponent",
+  name: "LoginComponent",
   components: {
     Form,
     Field,
   },
   emits: {
     "change-component": (paylaod) => {
-      if (paylaod.componentName !== "LoginComponent") {
+      if (paylaod.componentName !== "RegisterComponent") {
         return false;
       }
       return true;
     },
   },
   data() {
-    
     const schema = yup.object().shape({
       email: yup
         .string()
@@ -101,9 +85,6 @@ export default {
         .string()
         .required("Ein Passwort wird benötigt")
         .min(6, "Das Passwort muss mindestens 6 Zeichen lang sein"),
-      confirmPassword: yup
-        .string()
-        .oneOf([yup.ref("password")], "Passwörter stimmen nicht überein"),
     });
     return {
       schema,
@@ -111,25 +92,7 @@ export default {
   },
   methods: {
     submitData(values) {
-      //console.log(values);
-      const signupDO = {
-        email: values.email,
-        password: values.password,
-        returnSecureToken: true,
-      };
-      console.log(signupDO)
-      axios
-        .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[${APIKey}]`,
-          signupDO
-        )
-        .then((data)=>{
-          console.log(data)
-        })
-        .catch((data) =>{
-          console.log(data)
-        })
-        ;
+      console.log(values);
     },
     changeComponent(componentName) {
       this.$emit("change-component", { componentName });
