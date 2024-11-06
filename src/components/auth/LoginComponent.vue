@@ -16,6 +16,9 @@
         >
       </p>
     </div>
+    <div class="alert alert-danger col-md-8 offset-2" v-if="error">
+      {{ errorDisplayText }}
+    </div>
     <Form @submit="submitData" :validation-schema="schema" v-slot="{ errors }">
       <div class="form-row">
         <div class="form-group col-md8 offset-2">
@@ -49,7 +52,10 @@
       <div class="form-row mt-3">
         <div class="form-group col-md8 offset-2">
           <div class="d-grid">
-            <button class="btn bg-vue">Einloggen</button>
+            <button class="btn bg-vue">
+              <span v-if="!isLoading">Einloggen</span>
+              <span v-else class="spinner-border spinner-border.sm"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -60,6 +66,8 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
+import axios from "axios";
+import { FIREBASE_API_KEY } from "@/config/firebase";
 export default {
   name: "LoginComponent",
   components: {
@@ -73,6 +81,19 @@ export default {
       }
       return true;
     },
+  },  computed:{
+    errorDisplayText(){
+      if(this.error){
+        if(this.error.includes("INVALID_PASSWORD")){
+          return "Das Passwort ist nicht gültig."
+        }
+        else if(this.error.includes("EMAIL_NOT_FOUND")){
+          return "Die Email Adresse konnte nicht gefunden werden."
+        }
+        return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      }
+      return ""
+    }
   },
   data() {
     const schema = yup.object().shape({
@@ -88,14 +109,36 @@ export default {
     });
     return {
       schema,
+      error:"",
+      isLoading:false,
     };
   },
   methods: {
     submitData(values) {
-      console.log(values);
-    },
-    changeComponent(componentName) {
-      this.$emit("change-component", { componentName });
+      this.isLoading=true;
+      this.error="";
+      //console.log(values);
+      const signinDO = {
+        email: values.email,
+        password: values.password,
+        returnSecureToken: true,
+      };
+      axios
+        .post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
+          signinDO
+        )
+        .then((data)=>{
+          console.log(data)
+          this.isLoading=false;
+        })
+        .catch((error) =>{
+          
+          console.log(error)
+         // this.error = error.response.data.error.message;
+          this.isLoading=false;
+        })
+        ;
     },
   },
 };

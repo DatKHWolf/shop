@@ -16,6 +16,7 @@
         >
       </p>
     </div>
+    <div class="alert alert-danger col-md-8 offset-2" v-if="error">{{ errorDisplayText }}</div>
     <Form @submit="submitData" :validation-schema="schema" v-slot="{ errors }">
       <div class="form-row">
         <div class="form-group col-md8 offset-2">
@@ -62,7 +63,10 @@
       <div class="form-row mt-3">
         <div class="form-group col-md8 offset-2">
           <div class="d-grid">
-            <button class="btn bg-vue">Registrieren</button>
+            <button class="btn bg-vue">
+              <span v-if="!isLoading">Registrieren</span>
+              <span v-else class="spinner-border spinner-border.sm"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -74,7 +78,7 @@
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
 import axios from "axios";
-let APIKey = "So nicht"
+import { FIREBASE_API_KEY } from "@/config/firebase";
 export default {
   name: "RegisterComponent",
   components: {
@@ -88,6 +92,17 @@ export default {
       }
       return true;
     },
+  },
+  computed:{
+    errorDisplayText(){
+      if(this.error){
+        if(this.error.includes("EMAIL_EXISTS")){
+          return "Die Email Adresse existiert bereits"
+        }
+        return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es erneut"
+      }
+      return ""
+    }
   },
   data() {
     
@@ -107,10 +122,14 @@ export default {
     });
     return {
       schema,
+      error:"",
+      isLoading:false,
     };
   },
   methods: {
     submitData(values) {
+      this.isLoading=true;
+      this.error="";
       //console.log(values);
       const signupDO = {
         email: values.email,
@@ -120,14 +139,18 @@ export default {
       console.log(signupDO)
       axios
         .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[${APIKey}]`,
+          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
           signupDO
         )
         .then((data)=>{
           console.log(data)
+          this.isLoading=false;
+          this.changeComponent('LoginComponent');
         })
-        .catch((data) =>{
-          console.log(data)
+        .catch((error) =>{
+          //console.log(data)
+          this.error = error.response.data.error.message;
+          this.isLoading=false;
         })
         ;
     },
