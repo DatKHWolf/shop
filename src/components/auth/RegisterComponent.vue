@@ -16,7 +16,9 @@
         >
       </p>
     </div>
-    <div class="alert alert-danger col-md-8 offset-2" v-if="error">{{ errorDisplayText }}</div>
+    <div class="alert alert-danger col-md-8 offset-2" v-if="error">
+      {{ errorDisplayText }}
+    </div>
     <Form @submit="submitData" :validation-schema="schema" v-slot="{ errors }">
       <div class="form-row">
         <div class="form-group col-md8 offset-2">
@@ -77,8 +79,6 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
-import axios from "axios";
-import { FIREBASE_API_KEY } from "@/config/firebase";
 export default {
   name: "RegisterComponent",
   components: {
@@ -93,19 +93,18 @@ export default {
       return true;
     },
   },
-  computed:{
-    errorDisplayText(){
-      if(this.error){
-        if(this.error.includes("EMAIL_EXISTS")){
-          return "Die Email Adresse existiert bereits"
+  computed: {
+    errorDisplayText() {
+      if (this.error) {
+        if (this.error.includes("EMAIL_EXISTS")) {
+          return "Die Email Adresse existiert bereits";
         }
-        return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es erneut"
+        return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es erneut";
       }
-      return ""
-    }
+      return "";
+    },
   },
   data() {
-    
     const schema = yup.object().shape({
       email: yup
         .string()
@@ -122,37 +121,29 @@ export default {
     });
     return {
       schema,
-      error:"",
-      isLoading:false,
+      error: "",
+      isLoading: false,
     };
   },
   methods: {
     submitData(values) {
-      this.isLoading=true;
-      this.error="";
+      this.isLoading = true;
+      this.error = "";
       //console.log(values);
-      const signupDO = {
-        email: values.email,
-        password: values.password,
-        returnSecureToken: true,
-      };
-      console.log(signupDO)
-      axios
-        .post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
-          signupDO
-        )
-        .then((data)=>{
-          console.log(data)
-          this.isLoading=false;
-          this.changeComponent('LoginComponent');
+      this.$store
+        .dispatch("signup", {
+          email: values.email,
+          password: values.password,
         })
-        .catch((error) =>{
-          //console.log(data)
-          this.error = error.response.data.error.message;
-          this.isLoading=false;
+        .then(() => {
+          this.isLoading = false;
+          //console.log(this.$store.state);
+          this.changeComponent("LoginComponent");
         })
-        ;
+        .catch((error) => {
+          this.error = error.message;
+          this.isLoading = false;
+        });
     },
     changeComponent(componentName) {
       this.$emit("change-component", { componentName });
