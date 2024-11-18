@@ -5,6 +5,25 @@
 <script>
 export default {
   name: "App",
+  created(){
+    this.$store.dispatch("autoSignin");
+    console.log(this.$store);
+  },
+  computed:{
+    token(){
+      return this.$store.getters.token;
+    },
+    watch:{
+      token: {
+        handler(){
+          if(this.token){
+            this.$store.dispatch("fetchProducts")
+          }
+        },
+        immediate:true,
+      }
+    }
+  }
 };
 </script>
 

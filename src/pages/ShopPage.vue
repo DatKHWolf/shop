@@ -1,23 +1,27 @@
 <template>
   <TheShopLayout>
     <template #default>
-      <h2 >Hallo</h2>
+      <div class="row">
+        <div class="col-3 m-3" v-for="i in 3" :key="i">
+          <ProductListItem />
+        </div>
+
+      </div>
     </template>
   </TheShopLayout>
 </template>
 
 <script>
-import TheShopLayout from "@/layouts/TheShopLayout.vue";
+import TheShopLayout from "@/layouts/TheShopLayout";
+import ProductListItem from "@/components/shop/ProductListItem.vue";
 export default {
   name: "ShopPage",
-  component: { TheShopLayout },
+  components: {
+    TheShopLayout,
+    ProductListItem
+  },
 };
 </script>
 
 <style scoped>
-h2{text-align: center;
-    text-decoration: underline dotted;
-text-decoration-color: blue;
-margin-top: 20px;
-color:rgb(214, 40, 121)}
 </style>

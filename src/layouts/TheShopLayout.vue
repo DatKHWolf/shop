@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <slot><h1>Hauptbereich</h1></slot>
+            <slot><h1>Sollte neuer Artikel oder der Shop sein</h1></slot>
           </div>
         </div>
       </div>

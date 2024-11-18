@@ -124,7 +124,7 @@ export default {
         .then(() => {
           this.isLoading = false;
           //this.changeComponent("LoginComponent");
-          //this.$router.push("/shop");
+         // this.$router.push("/shop");
           this.$router.push({path:"/shop"})
         })
         .catch((error) => {
