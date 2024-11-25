@@ -4,6 +4,7 @@ import ShopPage from "@/pages/ShopPage.vue";
 //import TheShopLayout from "@/layouts/TheShopLayout.vue";
 import store from "@/store";
 import CreateProductPage from "@/pages/CreateProductPage.vue";
+import PCGeraeteschein from "@/pages/PCGeraeteschein.vue";
 
 const router = createRouter({
   //optionen
@@ -29,6 +30,10 @@ const router = createRouter({
        meta:{
         requiresAuth:true,
       }
+    },
+    {
+      path:"/pc",
+      component:PCGeraeteschein   
     }
     
   ],
