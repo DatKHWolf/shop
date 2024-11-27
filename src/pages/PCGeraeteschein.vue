@@ -2,11 +2,11 @@
   <div>
     <TheShopLayout>
       <template #default>
-        <Form>
+        <Form @submit="submitPCData">
           <h2>Geräteschein</h2>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="hersteller"><strong>Hersteller</strong></label>
+              <label for="hersteller"><strong>Hersteller (falls vorhanden)</strong></label>
               <Field as="input" name="hersteller" type="text" class="form-control" id="hersteller"></Field>
             </div>
           </div>
@@ -18,13 +18,13 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="betriebssystem"><strong>Betriebssystem</strong></label>
+              <label for="betriebssystem"><strong>Betriebssystem (könnte mit select sein, wir erlauben ja nur ein paar)</strong></label>
               <Field as="input" name="betriebssystem" type="text" class="form-control" id="betriebssystem"></Field>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="ram"><strong>RAM</strong></label>
+              <label for="ram"><strong>RAM fehlt noch die Auswahl von Anzahl Riegel und Größe</strong></label>
               <Field as="input" name="ram" type="text" class="form-control" id="ram"></Field>
             </div>
           </div>
@@ -32,7 +32,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="festplatte"><strong>Festplatte</strong></label>
+              <label for="festplatte"><strong>Festplatte sollte mit Angabe über HD oder SSD sein</strong></label>
               <Field as="input" name="festplatte" type="text" class="form-control" id="festplatte"></Field>
             </div>
           </div>
@@ -44,13 +44,13 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="benchmarkMulticore"><strong>benchmarkMulticore</strong></label>
+              <label for="benchmarkMulticore"><strong>BenchmarkMulticore</strong></label>
               <Field as="input" name="benchmarkMulticore" type="text" class="form-control" id="benchmarkMulticore"></Field>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="bemerkungen"><strong>Bemerkungen</strong></label>
+              <label for="bemerkungen"><strong>Bemerkungen </strong></label>
               <Field as="input" name="bemerkungen" type="text" class="form-control" id="bemerkungen"></Field>
             </div>
           </div>

@@ -7,13 +7,12 @@ export default {
   name: "App",
   created(){
     this.$store.dispatch("autoSignin");
-    console.log(this.$store);
   },
   computed:{
     token(){
       return this.$store.getters.token;
     },
-    watch:{
+   /* watch:{
       token: {
         handler(){
           if(this.token){
@@ -22,7 +21,7 @@ export default {
         },
         immediate:true,
       }
-    }
+    }*/
   }
 };
 </script>
