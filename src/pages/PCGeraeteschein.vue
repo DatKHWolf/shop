@@ -3,6 +3,7 @@
     <TheShopLayout>
       <template #default>
         <Form>
+          <h2>Geräteschein</h2>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
               <label for="hersteller"><strong>Hersteller</strong></label>
@@ -27,12 +28,8 @@
               <Field as="input" name="ram" type="text" class="form-control" id="ram"></Field>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-8 offset-2">
-              <label for="hersteller"><strong>Hersteller</strong></label>
-              <Field as="input" name="hersteller" type="text" class="form-control" id="hersteller"></Field>
-            </div>
-          </div>
+
+
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
               <label for="festplatte"><strong>Festplatte</strong></label>
@@ -60,13 +57,13 @@
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
               <label for="benutzername"><strong>Benutzername</strong></label>
-              <Field as="input" name="benutzername" type="text" class="form-control" id="benutzername"></Field>
+              <Field as="input" name="benutzername" type="text" class="form-control" id="benutzername" placeholder="user" disabled></Field>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
               <label for="passwort"><strong>Passwort</strong></label>
-              <Field as="input" name="passwort" type="text" class="form-control" id="passwort"></Field>
+              <Field as="input" name="passwort" type="text" placeholder="user" class="form-control" id="passwort" disabled></Field>
             </div>
           </div>
           <button class="btn bg-vue">
@@ -114,4 +111,18 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+h2{
+  text-align: center;
+}
+button{
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+</style>
