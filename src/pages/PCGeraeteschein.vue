@@ -3,11 +3,11 @@
     <TheShopLayout>
       <template #default>
         <Form @submit="submitPCData" :validation-schema="schema">
-          <h2>Geräteschein (braucht das eine Anleitung? (DAU!))</h2>
+          <h2>Geräteschein {{ id }}</h2>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
               <label for="hersteller"
-                ><strong>Hersteller (falls vorhanden)</strong></label
+                ><strong>Hersteller ({{this.$store.state.id }})</strong></label
               >
               <Field
                 as="input"
@@ -34,7 +34,9 @@
             <div class="form-group col-md-8 offset-2">
               <label for="betriebssystem"
                 ><strong
-                  >Betriebssystem (eigentlich nur Ubuntu, aber es gibt ja Sonderfälle in der Theorie)</strong
+                  >Betriebssystem (eigentlich nur Ubuntu, aber es gibt ja
+                  Sonderfälle in der Theorie. Interessant wäre noch die Version
+                  in einem extra Feld)</strong
                 ></label
               >
               <Field
@@ -54,16 +56,21 @@
                 <option value="DDR3">DDR3</option>
                 <option value="DDR4">DDR4</option>
               </Field>
-              <Field name="riegel" type="radio" value="1" id="riegel"/><strong> 1 Riegel </strong>
-              <Field name="riegel" type="radio" value="2" id="riegel"/> <strong>2 Riegel </strong>
-              <Field name="riegel" type="radio" value="4" id="riegel"/> <strong>4 Riegel </strong>
-              <label for="ram"
-                ><strong
-                  > RAM </strong
-                ></label
+              <Field name="riegel" type="radio" value="1" id="riegel" /><strong>
+                1 Riegel
+              </strong>
+              <Field name="riegel" type="radio" value="2" id="riegel" />
+              <strong>2 Riegel </strong>
+              <Field name="riegel" type="radio" value="4" id="riegel" />
+              <strong>4 Riegel </strong>
+              <label for="ram"><strong> RAM </strong></label>
+              <Field
+                as="input"
+                name="ram"
+                class="form-control"
+                id="ram"
+                placeholder="Wie viel Arbeitsspeicher hat der PC? Verschiedene Riegel verbaut man nicht!"
               >
-              <Field as="input" name="ram" class="form-control" id="ram" placeholder="Größe der einzelnen Riegel, verschiedene Riegel verbaut man nicht!">
-
               </Field>
             </div>
           </div>
@@ -72,7 +79,8 @@
             <div class="form-group col-md-8 offset-2">
               <label for="festplatte"
                 ><strong
-                  >Festplatte Größe in GB, Auswahl für SSD oder HDD anbieten?</strong
+                  >Festplatte Größe in GB, Auswahl für SSD oder HDD
+                  anbieten?</strong
                 ></label
               >
               <Field
@@ -114,7 +122,12 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-8 offset-2">
-              <label for="bemerkungen"><strong>Bemerkungen </strong></label>
+              <label for="bemerkungen"
+                ><strong
+                  >Bemerkungen wo unter anderem die Anschlüsse vom PC angegeben
+                  werden, ist so ziemlich nutzlos</strong
+                ></label
+              >
               <Field
                 as="field"
                 name="bemerkungen"
@@ -187,7 +200,7 @@ export default {
         .string()
         .required("Ein Betriebssystem wird benötigt"),
       ramtype:yup
-      .string() 
+      .string()
       .required("Du musst einen Typ von Arbeitsspeicher auswählen"),
       riegel:yup
       .string()
@@ -220,6 +233,7 @@ export default {
     });
     return {
       schema,
+      id : this.$store.state.id,
       pcDataOB: {
         hersteller: "",
         prozessor: "",
@@ -237,6 +251,11 @@ export default {
       },
     };
   },
+  computed:{
+
+  }
+
+
 };
 </script>
 
