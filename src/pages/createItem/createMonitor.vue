@@ -28,17 +28,18 @@
             >
           </p>
         </Field>
-        <p>
-          <span> Ausgewählt : {{ values }} + {{ size }} Zoll</span>
-        </p>
-        <br />
+
         <h2>Wie groß ist der Monitor?</h2>
         <p> <Field as="input" name="size" type="text" v-model="size">
             in Zoll
         </Field></p>
+        <p>
+          <span> Ausgewählt : {{ values }} + {{ size }} Zoll</span>
+        </p>
+        <br />
 
         <button class="btn bg-vue">
-          <span>Weiter</span>
+          <span>Erstellen</span>
         </button>
       </Form>
     </TheShopLayout>
