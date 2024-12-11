@@ -85,7 +85,6 @@ const actions = {
     });
   },
   autoSignout(context) {
-    console.log(timer)
     //console.log("Der User wurde automatisch ausgelogt");
     context.dispatch("signout");
   },
@@ -108,7 +107,7 @@ const actions = {
 
 const getters = {
   isAuthenticated:(state)=> !!state.token,
-  token:(state) =>state.token
+  token:(state) =>state.token,
 };
 
 const authModule = {

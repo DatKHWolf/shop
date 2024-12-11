@@ -2,7 +2,6 @@ import axios from "axios";
 
 const state={
     products:[],
-    id:'2024-12-05-01',
 }
 const mutations = {
     setProducts(state, payload){
@@ -19,8 +18,16 @@ const actions={
         const token = context.rootState.auth.token;
         axios.get(`https://vue-3-shop-backend-4c1ea-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=${token}`)
         .then((response)=>{
-            console.log(response);
-        
+            const productsDO=[]
+            for (const id in response.data){
+                productsDO.push({
+                    id:id,
+                    ...response.data[id],
+                });
+
+            }
+            context.commit("setProducts", productsDO);
+            
             
         })
         .catch((err)=>{

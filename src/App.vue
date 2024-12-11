@@ -11,19 +11,21 @@ export default {
   computed:{
     token(){
       return this.$store.getters.token;
-    },
-   /* watch:{
+    }
+  },
+  watch:{
       token: {
         handler(){
           if(this.token){
             this.$store.dispatch("fetchProducts")
+            console.log("Watcher macht was")
           }
         },
         immediate:true,
       }
-    }*/
+    }
   }
-};
+;
 </script>
 
 <style>

@@ -2,7 +2,7 @@
   <div>
     <TheShopLayout>
       <h1>Welche Anschlüsse hat der Monitor?</h1>
-      <Form>
+      <Form @submit="submitMonitor">
         <Field name="auswahl" as="checkbox" type="checkbox"  multiple>
 
             <!-- hier bitte mit V-For arbeiten -->
@@ -62,8 +62,10 @@ export default {
 
     };
   },
-  computed:{
-
+  methods:{
+    submitMonitor(){
+      console.log(this.values+", "+this.size)
+    }
  
     
   },
