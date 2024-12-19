@@ -2,6 +2,7 @@ import axios from "axios";
 
 const state={
     products:[],
+    monitor:[],
 }
 const mutations = {
     setProducts(state, payload){
